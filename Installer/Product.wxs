@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="CMart Win Service" Language="1033" Version="1.0.0.0" Manufacturer="CMartCoding" UpgradeCode="2e9f010f-2389-4197-aa8f-5f6cea87fe0c">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade AllowDowngrades="yes" />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Feature Id="ProductFeature" Title="Installer" Level="1">
+      <ComponentGroupRef Id="CG_DependencyFiles" />
+      <ComponentGroupRef Id="CG_ConfigFiles" />
+      <ComponentGroupRef Id="CG_ServiceInstaller" />
+    </Feature>
+  </Product>
+
+  <!--Install Folder C:\CMartCoding\CMartWinService\-->
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="CMARTFOLDER">
+        <Directory Id="INSTALLFOLDER" Name="CMartWinService" />
+      </Directory>
+    </Directory>
+    <SetDirectory Id="CMARTFOLDER" Value="[WindowsVolume]CMartCoding"/>
+  </Fragment>
+
+  <!--DEPENDENCY FILES-->
+  <Fragment>
+    <ComponentGroup Id="CG_DependencyFiles" Directory="INSTALLFOLDER">
+      <Component Guid="CB0604BE-202F-4A0B-BBEF-F4C962CE463A">
+        <File Source="$(var.WinService.TargetDir)Application.dll" KeyPath="yes"/>
+      </Component>
+      <Component Guid="ABA12169-33E8-4140-A547-1268DA306C61">
+        <File Source="$(var.WinService.TargetDir)Domain.dll" KeyPath="yes"/>
+      </Component>
+      <Component Guid="4A1DA99A-DC08-4E9E-9C05-88987C18D6D4">
+        <File Source="$(var.WinService.TargetDir)Persistence.dll" KeyPath="yes"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <!--CONFIG FILES-->
+  <Fragment>
+    <ComponentGroup Id="CG_ConfigFiles" Directory="INSTALLFOLDER">
+      <Component Guid="17C70FC2-4AF5-4381-9FBE-B9C4D062E74A" NeverOverwrite="yes" Permanent="yes">
+        <File Source="$(var.WinService.TargetDir)WinService.exe.config" KeyPath="yes"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <!--SERVICE-->
+  <Fragment>
+    <ComponentGroup Id="CG_ServiceInstaller" Directory="INSTALLFOLDER">
+      <Component Guid="F7E041AB-3227-4272-92C1-4A12685F30AF" >
+        <File Source="$(var.WinService.TargetDir)WinService.exe" KeyPath="yes"/>
+        <ServiceInstall Id="ServiceInstaller"
+                        Type="ownProcess"
+                        Name="CMartWinService"
+                        DisplayName="CMart Windows Service"
+                        Description="Super awesome service used as a cog in the effort to take over the world"
+                        Start="auto"
+                        ErrorControl="normal"
+                        Account="LocalSystem"/>
+        <ServiceControl Id="StartService" Start="install" Stop="both" Remove="uninstall" Name="CMartWinService" Wait="yes" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+</Wix>

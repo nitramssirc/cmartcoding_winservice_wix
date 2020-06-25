@@ -223,3 +223,20 @@ project.lock.json
 #####
 # End of core ignore list, below put you custom 'per project' settings (patterns or path)
 #####
+/VS_NewServiceProjectInSlnExplorer.png
+/VS_NewInstallerProject.png
+/VS_InstallerPropsSupressPDB.png
+/VS_InstallerPropsName.png
+/VS_CreateNewWixProject.png
+/VS_CreateNewWindowsService.png
+/VS_CreateNewProject.png
+/VS_CreateNewConfigure.png
+/VS_AddProjectRefToInstaller.png
+/VS_AddedDependencies.png
+/ServiceOutput.png
+/ServiceInAddRemovePrograms.png
+/RunningInstaller.png
+/InstalledService.png
+/InstalledComponents.png
+/BuiltInstaller.png
+/AfterUninstall.png
